@@ -30,6 +30,8 @@ var Simple = function() {
     
     this.loadedImages = [];
     
+    this.motion = null;
+    this.motionMgr = null;
     
     this.modelDef = {
         
@@ -38,7 +40,8 @@ var Simple = function() {
         "model":"assets/murakumo/runtime/murakumo.moc",
         "textures":[
             "assets/murakumo/runtime/murakumo.2048/texture_00.png",
-        ]
+        ],
+        "motion":"assets/murakumo/runtime/motions/murakumo_tap_bust_01.mtn"
     };
     
     
@@ -99,7 +102,13 @@ Simple.initLoop = function(canvas)
 	Simple.loadBytes(modelDef.model, function(buf){
 		live2DModel = Live2DModelWebGL.loadModel(buf);
 	});
+    
+    Simple.loadBytes(modelDef.motion, function(buf){
+    motion = new Live2DMotion.loadMotion(buf);  
+    });
+    motionMgr = new L2DMotionManager();
 
+    //this is just added lol
 	
     var loadCount = 0;
 	for(var i = 0; i < modelDef.textures.length; i++){
@@ -117,7 +126,6 @@ Simple.initLoop = function(canvas)
 		})( i );
 	}
     
-	
     
     (function tick() {
         Simple.draw(gl); 
@@ -165,6 +173,10 @@ Simple.draw = function(gl)
         live2DModel.setMatrix(matrix4x4);
 	}
     
+    if(motionMgr.isFinished()){
+        motionMgr.startMotion(motion);
+    }
+    motionMgr.updateParam(live2DModel);
 	
     var t = UtSystem.getTimeMSec() * 0.001 * 2 * Math.PI; 
     var cycle = 3.0; 
