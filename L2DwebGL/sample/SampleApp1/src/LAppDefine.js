@@ -30,7 +30,7 @@ var LAppDefine = {
     BACK_IMAGE_NAME : "assets/image/back_class_normal.png",
 
     
-    MODEL_HARU : "assets/live2d/haru/haru.model.json",
+    MODEL_HARU : "../Simple/assets/murakumo/runtime/murakumo.model.json",
     MODEL_HARU_A : "assets/live2d/haru/haru_01.model.json",
     MODEL_HARU_B : "assets/live2d/haru/haru_02.model.json",
     MODEL_SHIZUKU : "assets/live2d/shizuku/shizuku.model.json",
