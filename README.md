@@ -2,7 +2,8 @@
 Have murakumo do stuff with you
 
 ## To DO:
-- Not make it reload after each page 
-- ~~Remove extraneous files~~
 - follow the window when rescaling (always bottom right of screen)
 - Add more functionality
+
+##TIPS ON USAGE:
+- USE FULL SCREEN BECAUSE WINDOW SCALING IS MESSED UP

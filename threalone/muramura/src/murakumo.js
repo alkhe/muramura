@@ -4,7 +4,7 @@ $(a).css({
     "position":"fixed",
     "top": "0px",
     "left": "0px",
-    "transform": "translate(41%, 29%)",
+    "transform": "scale(1, 1)",
     "pointer-events": "none"
 });
 a.width = window.innerWidth;
@@ -13,6 +13,10 @@ a.height = window.innerHeight;
 emptydiv.setAttribute("top", 0); */
 //emptydiv.style.left = x_pos;
 //emptydiv.style.top = y;
+var rratio = 0
+rratio += window.innerWidth / window.innerHeight;
+var winW = -1;
+var winH = -1;
 
 document.body.appendChild(a);
 a.setAttribute("id", "glcanvas");
@@ -78,11 +82,9 @@ function initL2dCanvas(canvasId)
     if(document.addEventListener) {
         document.addEventListener("mousemove", mouseEvent, false);
         document.addEventListener("mousedown", mouseEvent, false);
-
-        
-        
-
-        
+        window.addEventListener("resize", resizeEvent, false);
+        window.addEventListener("orientation change", resizeEvent, false);
+     
     }
     
     btnChangeModel = b;
@@ -98,7 +100,9 @@ function init()
     var height = this.canvas.height;
     
     this.dragMgr = new L2DTargetPoint();
-
+    
+    winW = window.innerWidth;
+    winH = window.innerHeight;
     
     var ratio = height / width;
     var left = LAppDefine.VIEW_LOGICAL_LEFT;
@@ -121,11 +125,12 @@ function init()
     this.viewMatrix.setMinScale(LAppDefine.VIEW_MIN_SCALE);
 
     this.projMatrix = new L2DMatrix44();
-    this.projMatrix.multScale(1 / 8, (width / height / 8));
+    this.projMatrix.multTranslate(0.002*window.innerWidth, -1*0.00055*window.innerHeight);
+    this.projMatrix.multScale(1 / 4, (width / height / 4));
 
     
     this.deviceToScreen = new L2DMatrix44();
-    this.deviceToScreen.multTranslate(-width / 2.0, -height / 2.0);
+    this.deviceToScreen.multTranslate(-width / 1.2, -height / 1.4);
     this.deviceToScreen.multScale(2 / width, -2 / width);
     
     
@@ -137,7 +142,7 @@ function init()
     }
 
 	
-	this.gl.clearColor(0, 0.0, 0.0, 0);
+	this.gl.clearColor(0.0, 0.0, 0.0, 0.0);
 
     changeModel();
     
@@ -150,7 +155,6 @@ function startDraw() {
         this.isDrawStart = true;
         (function tick() {
                 draw(); 
-
                 var requestAnimationFrame = 
                     window.requestAnimationFrame || 
                     window.mozRequestAnimationFrame ||
@@ -167,7 +171,6 @@ function startDraw() {
 function draw()
 {
     // l2dLog("--> draw()");
-
     MatrixStack.reset();
     MatrixStack.loadIdentity();
     
@@ -194,10 +197,7 @@ function draw()
             
             if (!this.isModelShown && i == this.live2DMgr.numModels()-1) {
                 this.isModelShown = !this.isModelShown;
-                var btnChange = document.getElementById("btnChange");
-                btnChange.textContent = "Change Model";
-                btnChange.removeAttribute("disabled");
-                btnChange.setAttribute("class", "active");
+
             }
         }
     }
@@ -208,10 +208,7 @@ function draw()
 
 function changeModel()
 {
-    var btnChange = document.getElementById("btnChange");
-    btnChange.setAttribute("disabled","disabled");
-    btnChange.setAttribute("class", "inactive");
-    btnChange.textContent = "Now Loading...";
+
     this.isModelShown = false;
     
     this.live2DMgr.reloadFlg = true;
@@ -219,7 +216,6 @@ function changeModel()
 
     this.live2DMgr.changeModel(this.gl);
 }
-
 
 
 
@@ -308,9 +304,48 @@ function lookFront()
     thisRef.dragMgr.setPoint(0, 0);
 }
 
+function resizeEvent(e){
+    e.preventDefault();
+    var ratio = this.canvas.width / this.canvas.height;
+    var newHeight = window.innerHeight - winH;
+    var newWidth = window.innerWidth - winW;
+    winW = window.innerWidth;
+    winH = window.innerHeight;
+    this.canvas.width += newWidth;
+    this.canvas.height += newHeight;
+
+    //this.projMatrix = new L2DMatrix44();
+    //this.projMatrix.multTranslate(0.0, 0.0);
+    //this.projMatrix.multScale(1 / 4, (rratio/4));
+    /**
+    if (newWidthToHeight > rratio) {
+        //newWidth = newHeight * rratio;
+        //newWidth = newHeight * rratio;
+
+    } else {
+        //newHeight = newWidth / rratio;
+        gl.viewport(0, 0, drawingbufferwidth, drawingbufferwidth / rratio);
+    }    **/
+    //this.canvas.width = window.innerWidth;
+    //this.canvas.height = window.innerHeight;
+    //gl.viewport(0,0, gl.drawingBufferWidth, gl.drawingBufferHeight);
+    //this.projMatrix = new L2DMatrix44();
+    //this.projMatrix.multTranslate(0.0, 0.0);
+    //this.projMatrix.multScale(1 / 4, (rratio/4));
+    
+    //gl.viewport(0, 0, drawingbufferwidth, drawingbufferheight);
+    
+
+    
+
+    draw();
+    
+}
+
+
 function mouseEvent(e)
 {
-    e.preventDefault();
+    
     
     if (e.type == "mousedown") {
 

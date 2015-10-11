@@ -145,8 +145,8 @@ LAppLive2DManager.prototype.tapEvent = function(x, y)
 {    
   //  if (LAppDefine.DEBUG_LOG)
        // console.log("tapEvent view x:" + x + " y:" + y);
-       y = y * 8;
-       x = x * 8;
+    x = x*4;
+    y = y*4;
     for (var i = 0; i < this.models.length; i++)
     {
 
