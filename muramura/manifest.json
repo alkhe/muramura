@@ -1,0 +1,45 @@
+{
+  "manifest_version": 2,
+  "name": "Murakumo Extension",
+  "version": "0.2",
+  "content_scripts": [
+  {
+    "matches": ["<all_urls>"],
+    "js": [
+    		"src/jquery-2.1.4.js",
+           	"src/live2d.min.js",
+        	"src/Live2DFramework.js",
+        	"src/utils/MatrixStack.js",
+        	"src/utils/ModelSettingJson.js",
+        	"src/PlatformManager.js",
+        	"src/LAppDefine.js",
+        	"src/LAppModel.js",
+        	"src/LAppLive2DManager.js",
+        	"src/murakumo.js"]
+
+  }
+	],
+	"web_accessible_resources": [
+        /**
+    		"assets/live2d/haru/*",
+    		"assets/live2d/haru/expressions/*",
+    		"assets/live2d/haru/haru_01.1024/*",
+    		"assets/live2d/haru/haru_02.1024/*",
+    		"assets/live2d/haru/motions/*",
+    		"assets/live2d/haru/sounds/*",
+            **/
+    		"assets/live2d/murakumo/*",
+    		"assets/live2d/murakumo/expressions/*",
+    		"assets/live2d/murakumo/murakumo.1024/*",
+    		"assets/live2d/murakumo/motions/*",
+    		"assets/live2d/murakumo/sounds/*"
+
+    ]
+
+}
+
+
+
+
+
+         
