@@ -1,5 +1,7 @@
 ## Cal Hacks 2015: Murakumo Chrome Extension
-Have murakumo read manga with you
+Have murakumo do stuff with you
 
 ## To DO:
-Make extension working
+Not make it reload after each page
+Remove extraneous files
+Add more functionality
