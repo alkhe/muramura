@@ -31,7 +31,7 @@ var c = document.createElement("myconsole");
 
 $(document).ready(function()
     {
-        sampleApp1();
+        murakumo();
     });
 
 window.onerror = function(msg, url, line, col, error) {
@@ -39,7 +39,7 @@ window.onerror = function(msg, url, line, col, error) {
     l2dError(errmsg);
 }
 
-function sampleApp1()
+function murakumo()
 {
     this.platform = window.navigator.platform.toLowerCase();
     
